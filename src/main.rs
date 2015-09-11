@@ -16,30 +16,32 @@
 */
 
 
-use std::io::Read;
-use std::fs::File;
+// For fetching from wiki
+extern crate hyper;
 
+use hyper::Client;
+use hyper::header::Connection;
+
+use std::io::Read;
 
 /*
-    Function to read file and return vector of strings, each of them
-    corresponding to a line from a file.
-
-    In a case where there is no file, return early.
+    Function to download list of nodes from wiki and return vector of
+    strings, each string corresponding to the node from wiki.
 */
-fn vec_strings(file: &str) -> Result<Vec<String>, ()> {
-    let mut file = match File::open(file) {
-        Ok(f) => f,
-        Err(e) => {
-            println!("Error opening {}: {}", file, e);
-            return Err(())
-        },
-    };
+fn dl_vec(link: &str) -> Vec<String> {
+    let mut body = String::new();
+    let client = Client::new();
 
-    let mut content = String::new();
-    file.read_to_string(&mut content).unwrap();
+    client.get(link)
+        // set a header and send it
+        .header(Connection::close())
+        .send().unwrap()
+        // read the response
+        .read_to_string(&mut body).unwrap();
 
-    Ok(content.lines().map(|l| l.to_string()).collect())
+    body.lines().map(|l| l.to_string()).collect()
 }
+
 
 fn parse_into_string(string: &str, ipv6: bool) -> Option<String> {
     if string.starts_with('|') &&
@@ -83,11 +85,7 @@ fn parse_into_string(string: &str, ipv6: bool) -> Option<String> {
 
 
 fn main() {
-    let file = "nodes.txt";
-    let vecs = match vec_strings(file) {
-        Ok(v) => v,
-        Err(_) => return,
-    };
+    let vecs = dl_vec("https://wiki.tox.chat/users/nodes?do=edit");
 
     for s in vecs {
         // if has IPv6, print it first

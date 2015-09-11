@@ -7,7 +7,7 @@ Build status: [![Build Status](https://travis-ci.org/zetok/tox-wiki-nodes-parser
 # Installation
 Running it is fairly simple.
 
-Download [binary for Linux x86_64](https://github.com/zetok/tox-wiki-nodes-parser/releases/download/v0.0.0/tox-wiki-nodes-parser) and run it.
+Download [binary for Linux x86_64](https://github.com/zetok/tox-wiki-nodes-parser/releases/download/v0.0.1/tox-wiki-nodes-parser) and run it.
 
 
 To compile yourself:
@@ -18,18 +18,7 @@ To compile yourself:
 
 # Usage
 
-Parser takes content of file `nodes.txt` from working directory and prints to stdout parsed list of nodes.
-
-Provide file `nodes.txt` in working directory, with content from wiki, and run parser.
-
-You can do that by e.g. running this script:
-
-```bash
-wget https://github.com/zetok/tox-wiki-nodes-parser/releases/download/v0.0.0/tox-wiki-nodes-parser && \
-wget https://wiki.tox.chat/users/nodes?do=edit -O nodes.txt && \
-chmod +x tox-wiki-nodes-parser && \
-./tox-wiki-nodes-parser
-```
+Parser downloads the list of nodes from ``https://wiki.tox.chat/users/nodes?do=edit`` and prints to stdout parsed list of nodes.
 
 
 # License
