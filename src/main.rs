@@ -42,14 +42,15 @@ fn dl_vec(link: &str) -> Vec<String> {
     body.lines().map(|l| l.to_string()).collect()
 }
 
-
+// example of a string to parse:
+// | 144.76.60.215           | 2a01:4f8:191:64d6::1                   | 33445  | 04119E835DF3E78BACF0F84235B300546AF8B936F035185E2A8E9E0A67C8924F  | sonOfRa          | DE        |
 fn parse_into_string(string: &str, ipv6: bool) -> Option<String> {
     if string.starts_with('|') &&
             (string.ends_with("|") || string.ends_with("|\r")) {
         let split: Vec<&str> = string.split_terminator("| ").collect();
         // return early if split stuff doesn't appear to match
         // list of nodes
-        if split.len() < 8 {
+        if split.len() < 6 {
             return None
         }
 

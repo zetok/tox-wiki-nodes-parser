@@ -1,8 +1,8 @@
 [package]
 name = "tox-wiki-nodes-parser"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Zetok Zalbavar <zetok@openmailbox.org>"]
 
 
 [dependencies]
-hyper = "0.6"
+hyper = "0.7"
